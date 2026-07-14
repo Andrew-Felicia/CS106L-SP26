@@ -18,7 +18,9 @@
 void exercise1_cout() {
     std::cout << "=== Exercise 1: cout ===\n";
 
-    // YOUR CODE HERE
+    std::cout << "Hello, Streams!" << std::endl;
+    std::cout << 42 << std::endl;
+    std::cout << 3.14 << std::endl;
 
     std::cout << "\n";
 }
@@ -44,7 +46,9 @@ void exercise2_cin() {
     std::string name;
     int number;
  
-    // YOUR CODE HERE
+    std::cin >> name;
+    std::cin >> number;
+    std::cout << "Hello " << name << ", your favorite number is " << number << "!\n";
   
     std::cout << "\n";
 }
@@ -73,6 +77,15 @@ void exercise3_ofstream() {
  
     // YOUR CODE HERE
     std::ofstream ofile("numbers.txt");
+
+    if (ofile.is_open()) {
+        for (int i = 1; i <= 5; i++) {
+            ofile << i << '\n';
+        }
+    }
+    ofile.close();
+
+    std::cout << "done!" << '\n';
  
     std::cout << "\n";
 }
@@ -94,7 +107,15 @@ void exercise3_ofstream() {
 void exercise4_ifstream() {
     std::cout << "=== Exercise 4: ifstream ===\n";
 
-    // YOUR CODE HERE
+    std::ifstream ifsh("numbers.txt");
+
+    int number;
+    while (ifsh >> number) {
+        std::cout << "Number: " << number << '\n';
+    }
+
+    ifsh.close();
+    
 
     std::cout << "\n";
 }
@@ -116,7 +137,40 @@ void exercise4_ifstream() {
 void exercise5_combined() {
     std::cout << "=== Exercise 5: Combined ===\n";
  
-    // YOUR CODE HERE
+    int a, b, c;
+    std::cout << "enter 3 numbers" << '\n';
+    std::cin >> a >> b >> c;
+
+    std::ofstream firstWrite("user_numbers.txt");
+    if (!firstWrite.is_open()) {
+        std::cerr << "Error: could not open file\n";
+        return;  
+    }
+    firstWrite << a << '\n';
+    firstWrite << b << '\n';
+    firstWrite << c << '\n';
+    firstWrite.close();
+
+
+    std::ifstream firstRead("user_numbers.txt");
+    int number;
+    while (firstRead >> number) {
+        std::cout << number << '\n';
+    }
+    firstRead.close();
+
+    std::ofstream secondWrite("user_numbers.txt", std::ios::app);
+    secondWrite << 99 << '\n';
+    secondWrite.close();
+
+
+    std::ifstream secondRead("user_numbers.txt");
+    int number1;
+    while (secondRead >> number1) {
+        std::cout << number1 << '\n';
+    }
+    secondRead.close();
+
     
  
     std::cout << "\n";

@@ -10,7 +10,8 @@
 //          "Enter your details below."
 // ============================================================
 void exercise1() {
-    // YOUR CODE HERE
+    std::cout << "=== Student Grade Tracker ===" << '\n';
+    std::cout << "Enter your details below." << '\n';
 }
 
 
@@ -28,6 +29,9 @@ void exercise2(std::string& name, int& grade) {
     // YOUR CODE HERE
     // note: we pass name and grade by reference so later
     // exercises can use them!
+    std::cout << "enter name and grade" << '\n';
+    std::cin >> name >> grade;
+
 }
 
 
@@ -41,7 +45,10 @@ void exercise2(std::string& name, int& grade) {
 //        Otherwise return true
 // ============================================================
 bool exercise3(int grade) {
-    // YOUR CODE HERE
+    if (grade < 0 || grade > 100) {
+        std::cerr << "Error: invalid grade!\n";
+        return false;
+    }
     return true;
 }
 
@@ -59,7 +66,13 @@ bool exercise3(int grade) {
 //    - print "Saved to grades.txt!" to cout on success
 // ============================================================
 void exercise4(const std::string& name, int grade) {
-    // YOUR CODE HERE
+    std::ofstream write("grades.txt");
+    if (!write.is_open()) {
+        std::cerr << "Error: could not open file" << '\n';
+    }
+    write << name << " " << grade << '\n';
+    write.close();
+    std::cout << "Saved to grades.txt!" << '\n';
 }
 
 
@@ -74,7 +87,17 @@ void exercise4(const std::string& name, int grade) {
 //    - use a while loop to read until end of file
 // ============================================================
 void exercise5() {
-    // YOUR CODE HERE
+    std::ifstream read("grades.txt");
+    if (!read.is_open()) {
+        std::cerr << "Error: could not open file" << '\n';
+    }
+
+    std::string name;
+    int grade;
+    while (read >> name >> grade) {
+        std::cout << "Name: " << name << " | " << "Grade: " << grade << '\n'; 
+    }
+    read.close();
 }
 
 
@@ -87,12 +110,15 @@ void exercise5() {
 void exercise6() {
     std::cout << "\n=== Tracking 3 Students ===\n";
 
+    // std::ofstream write("grades.txt");
+
     for (int i = 0; i < 3; i++) {
 
         // ---------------------------------------------------------
         // STEP 1: declare a string called name and an int called grade
         // ---------------------------------------------------------
-        // YOUR CODE HERE
+        std::string name;
+        int grade;
 
 
         // ---------------------------------------------------------
@@ -100,7 +126,10 @@ void exercise6() {
         //   print "Enter name for student [i+1]: " before reading name
         //   print "Enter grade: " before reading grade
         // ---------------------------------------------------------
-        // YOUR CODE HERE
+        std::cout << "Enter name for student [" << i + 1 << "]: " << '\n';
+        std::cin >> name;
+        std::cout << "Enter grade: " << '\n';
+        std::cin >> grade;
 
 
         // ---------------------------------------------------------
@@ -109,7 +138,10 @@ void exercise6() {
         //     - print "Skipping [name] due to invalid grade."
         //     - use continue to skip to the next student
         // ---------------------------------------------------------
-        // YOUR CODE HERE
+        if (!exercise3(grade)) {
+            std::cout << "Skipping " << name << " due to invalid grade." << '\n';
+            continue;
+        }
 
 
         // ---------------------------------------------------------
@@ -118,15 +150,23 @@ void exercise6() {
         //   write name and grade to the file in the format: [name] [grade]
         //   print "Saved [name]!" to cout
         // ---------------------------------------------------------
-        // YOUR CODE HERE
+        std::ofstream write("grades.txt", std::ios::app);
+        if (!write.is_open()) {
+            std::cerr << "can't open grades.txt!" << '\n';
+            return;
+        }
+        write << name << " " << grade << '\n';
+        std::cout << "Saved " << name << "!" << '\n';
 
     }
+    //write.close();
 
     // ---------------------------------------------------------
     // STEP 5: print "\n=== All Students ===" then call exercise5()
     //         to read back and print everyone in the file
     // ---------------------------------------------------------
-    // YOUR CODE HERE
+    std::cout << "\n=== All Students ===\n";
+    exercise5();
 
 }
 
