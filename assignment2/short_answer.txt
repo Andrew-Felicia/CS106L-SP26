@@ -5,7 +5,18 @@ Marriage Pact
 -------------
 
 Q1. It is your choice to use either an ordered or unordered set. In a few sentences, what are some of the tradeoffs between the two? Additionally, please give an example (that has not been shown in lecture) of a valid hash function that could be used to hash student names for an unordered set.
-A1. TODO
+A1. An **ordered set** (such as `std::set`) stores its elements in sorted order, typically using a balanced binary search tree. This allows elements to be traversed in sorted order and supports operations like finding the next larger or smaller element. However, insertion, deletion, and lookup all take **O(log n)** time.
+
+An **unordered set** (such as `std::unordered_set`) stores elements in hash buckets. It does not maintain any ordering, but insertion, deletion, and lookup have an average time complexity of **O(1)**, making it faster for many applications. The tradeoff is that performance can degrade to **O(n)** in the worst case if many elements hash to the same bucket, and elements cannot be iterated in sorted order.
+
+One example of a hash function for student names is to compute a weighted sum of the ASCII values of each character. For example, for a name `s`, the hash value could be:
+
+`hash(s) = (31^0 * s[0] + 31^1 * s[1] + ... + 31^(n-1) * s[n-1]) mod M`
+
+where `M` is the number of buckets. This hash function takes both the characters and their positions into account, helping to distribute names more evenly across buckets.
+
 
 Q2. Note that we are saving pointers to names in the queue, not names themselves. Why might this be desired in this problem? What happens if the original set where the names are stored goes out of scope and the pointers are referenced?
-A2. TODO
+A2. Storing **pointers** to the names instead of copying the strings avoids creating duplicate copies of the same data, which saves both memory and the time required to copy potentially long strings. It also allows the queue to refer directly to the names stored in the original `std::set`, ensuring there is a single authoritative copy of each name.
+
+However, this approach requires that the original `std::set` remain alive for as long as the pointers are used. If the set goes out of scope or is destroyed, all of the pointers become **dangling pointers**, meaning they point to memory that is no longer valid. Dereferencing a dangling pointer results in **undefined behavior**, which may cause crashes, incorrect results, or other unpredictable behavior.
