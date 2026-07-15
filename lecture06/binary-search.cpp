@@ -8,6 +8,7 @@
  * @param value  The integer to search for
  * @return       true if found, false otherwise
  */
+//Caveat: in iterator, end point to the next popsition of end.
 bool binarySearch(std::vector<int>::iterator begin, std::vector<int>::iterator end, int value) {
     // 1. Base Case: If the range is empty, the value isn't here.
     if (begin >= end) {
@@ -24,10 +25,10 @@ bool binarySearch(std::vector<int>::iterator begin, std::vector<int>::iterator e
     
     if (*mid > value) {
         // Search the left half: [begin, mid)
-        // TODO: return binarySearchRecursive(...)
+        return binarySearch(begin, mid, value);
     } else {
         // Search the right half: [mid + 1, end)
-        // TODO: return binarySearchRecursive(...)
+        return binarySearch(mid + 1, end, value);
     }
 
     return false; // Placeholder
