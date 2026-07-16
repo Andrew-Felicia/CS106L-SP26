@@ -20,7 +20,8 @@
 // This constructor creates a new wizard, storing it's name
 // and starting energy.
 Wizard::Wizard(const std::string& name, int energy) {
-
+    this->name = name;
+    this->energy = energy;
 }
 
 // This function will try to use `amount` of energy.
@@ -29,18 +30,23 @@ Wizard::Wizard(const std::string& name, int energy) {
 // from energy and return true. Otherwise, the energy
 // should remain unchanged and it will return false.
 bool Wizard::useEnergy(int amount) {
-
+    if (energy - amount >= 0) {
+        energy = energy - amount;
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // This function should simply return the amount of energy
 // the wizard has left.
 int Wizard::getEnergy() const {
-
+    return energy;
 }
 
 // This should simply return the name of the wizard.
 std::string Wizard::getName() const {
-
+    return name;
 }
 
 // ==========================
@@ -49,12 +55,19 @@ std::string Wizard::getName() const {
 
 // Add this spell to the spellbook.
 void SpellBook::addSpell(const std::string& name, int cost) {
-
+    // spells.insert({name, cost});
+    spells[name] = cost;
 }
 
 // Try to have the wizard cast all of the spells they can.
 void SpellBook::castAll(Wizard& w) {
-
+    for (const auto& [name, cost] : spells) {
+        if (w.useEnergy(cost)) {
+            std::cout << w.getName() << " casted " << name << '\n';
+        } else {
+            std::cout << w.getName() << " is too tired to cast " << name << '\n';
+        }
+    }
 }
 
 // ==========================
