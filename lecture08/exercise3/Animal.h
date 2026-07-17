@@ -12,11 +12,13 @@ public:
 
     // Pure virtual — every derived class MUST override these
     virtual void speak()            const = 0;
+    //void speak() const;
     virtual void move()             const = 0;
     virtual std::string getType()   const = 0;
 
     // Virtual destructor — required whenever you delete through a base pointer
     virtual ~Animal();
+    //~Animal();
 
     // Non-virtual — implemented once, calls speak() and move() internally
     std::string getName() const;
