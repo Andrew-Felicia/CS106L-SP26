@@ -5,7 +5,12 @@ Make a Class
 ------------
 
 Q1. What’s const-correctness and why is it important?
-A1. TODO
+A1. 
+**Q1:** Const-correctness is the practice of using the `const` keyword to indicate which variables, parameters, and member functions should not modify an object's state. For example, member functions that only read an object's data should be declared `const`.
+
+Const-correctness is important because it helps prevent accidental modification of data, allows the compiler to catch mistakes at compile time, makes code easier to understand, and enables `const` objects to safely call read-only member functions.
+
 
 Q2. Is your class const-correct? How do you know?
-A2. TODO
+A2. 
+yes, because all the getter function are all set to const.
