@@ -34,6 +34,10 @@ public:
     /* Bonus function: Add `delta` to the value,
        keeping it within bounds. */
     void adjust(T delta);
+
+    //helps to debug.
+    void printAllValue();
 };
 
-#include "bounded_value.cpp"
+//#include "bounded_value.cpp"
+
