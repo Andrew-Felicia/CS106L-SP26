@@ -19,12 +19,14 @@
 #include <string>
 #include <concepts>
 
-// TODO: define the EqualityComparable concept here
-// template <typename T>
-// concept EqualityComparable = ...
 
-// TODO: apply your concept to this function
 template <typename T>
+concept EqualityComparable = requires(const T a, const T b) {
+    {a == b} -> std::convertible_to<bool>;
+};
+
+
+template <EqualityComparable T>
 bool allEqual(const T& a, const T& b, const T& c) {
     return a == b && b == c;
 }
@@ -32,19 +34,24 @@ bool allEqual(const T& a, const T& b, const T& c) {
 // This struct intentionally has no operator== defined
 struct NoEquals {
     int value;
+
+    bool operator==(const NoEquals& other) const {
+        return value == other.value;
+    }
 };
 
 int main() {
-    std::cout << std::boolalpha;
+    std::cout << std::boolalpha; //without this line will output: 1 0 1
     std::cout << allEqual(1, 1, 1)                              << std::endl; // true
     std::cout << allEqual(1, 2, 1)                              << std::endl; // false
-    std::cout << allEqual(std::string("hi"), std::string("hi"), std::string("hi")) << std::endl; // true
+    // std::cout << allEqual(std::string("hi"), std::string("hi"), std::string("hi")) << std::endl; // true, works. implicit instantiation.
+    std::cout << allEqual<std::string>("hi", "hi", "hi") << std::endl; // true, works. explicit instantiation.
 
     // TODO: uncomment this line and observe the error message
     // With your concept, it should clearly say NoEquals doesn't satisfy EqualityComparable
     // Without your concept, the error points deep inside the function body
-    // NoEquals a{1}, b{1}, c{1};
-    // std::cout << allEqual(a, b, c) << std::endl;
+    NoEquals a{1}, b{2}, c{1};
+    std::cout << allEqual(a, b, c) << std::endl;
 
     return 0;
 }

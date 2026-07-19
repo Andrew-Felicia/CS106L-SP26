@@ -21,7 +21,15 @@
 //       What type is the iterator? What type is the value?
 template <typename Iterator, typename TElem>
 bool contains(Iterator begin, Iterator end, const TElem& value) {
-    // YOUR CODE HERE
+    Iterator it = begin;
+    while (it != end) {
+        if (*it == value) {
+            return true;
+        }
+        ++it;
+    }
+    return false;
+
 }
 
 int main() {

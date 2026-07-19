@@ -16,6 +16,9 @@
 
 #include <iostream>
 #include <string>
+#include <concepts>
+
+
 
 template <typename T>
 T min(T a, T b) {
@@ -23,12 +26,9 @@ T min(T a, T b) {
 }
 
 int main() {
-    // BUG: this compiles but may not do what you expect!
-    auto result = min("apple", "banana");
-    std::cout << "min(\"apple\", \"banana\") = " << result << std::endl;
 
-    // TODO: fix the call above so it correctly compares strings alphabetically.
-    // Your fix should not change the template definition itself.
+    auto result = min<std::string>("apple", "banana"); //const char* gets converted to std::string here.
+    std::cout << "min(\"apple\", \"banana\") = " << result << std::endl;
 
     return 0;
 }
