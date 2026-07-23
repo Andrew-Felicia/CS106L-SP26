@@ -11,6 +11,10 @@ User::User(const std::string& name)
 {
 }
 
+User::~User() {
+  delete[] _friends;
+}
+
 /**
  * Adds a friend to this User's list of friends.
  * @param name The name of the friend to add.
@@ -59,7 +63,35 @@ void User::set_friend(size_t index, const std::string& name)
   _friends[index] = name;
 }
 
-/** 
- * STUDENT TODO:
- * The definitions for your custom operators and special member functions will go here!
- */
+// NON-MEMBER: 
+std::ostream& operator<<(std::ostream& os, const User& user) {
+    os << "User(name=" << user._name << ", friends=[";
+    for (size_t i = 0; i < user._size ; i++) {
+      if (i == user._size - 1) {
+        os << user._friends[i];
+      } else {
+        os << user._friends[i] << ", " ;
+      }
+    }
+    os << "])";
+    return os;
+}
+
+
+User::User(const User& user) {
+  _name = user._name;
+  _size = user._size;
+  _capacity = user._capacity;
+  _friends = new std::string[_capacity];
+  for (size_t i = 0; i < user._size; i++) {
+    _friends[i] = user._friends[i];
+  }
+}
+
+User& User::operator=(const User& user) {
+    //User(user); the compiler can't see the parameter passed in, it's shadowed.
+    if (this == &user) {
+      return *this;
+    }
+    
+}
