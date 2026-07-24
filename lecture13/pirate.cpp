@@ -48,7 +48,7 @@ public:
     // modifying or deleting one causes serious bugs.
 
     Pirate() {
-        // TODO
+        treasure = new Treasure("Rusty Spoon", 1);
     }
 
     Pirate(std::string itemName, int value) {
@@ -56,16 +56,24 @@ public:
     }
 
     Pirate(const Pirate& other) {
-        // TODO
+        treasure = new Treasure(other.treasure->name, other.treasure->goldValue);
     }
 
     Pirate& operator=(const Pirate& other) {
-        // TODO
+        if (this == &other) {
+            return *this;
+        }
+
+        delete treasure;
+
+        treasure = new Treasure(other.treasure->name, other.treasure->goldValue);
+
+
         return *this;
     }
 
     ~Pirate() {
-        // TODO
+        delete treasure;
     }
 
     void renameTreasure(std::string newName) {
