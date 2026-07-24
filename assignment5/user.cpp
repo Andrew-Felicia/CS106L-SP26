@@ -93,5 +93,32 @@ User& User::operator=(const User& user) {
     if (this == &user) {
       return *this;
     }
-    
+    std::string *new_friend = new std::string[user._capacity];
+
+    for (size_t i = 0; i < user._size; i++) {
+      new_friend[i] = user._friends[i];
+    }
+
+    delete[] _friends;
+
+    _size = user._size;
+    _name = user._name;
+    _capacity = user._capacity;
+    _friends = new_friend;
+
+    return *this;
+}
+
+
+User& User::operator+=(User& rhs) {
+    if (this == &rhs) {
+      return *this;
+    }
+    add_friend(rhs._name);
+    rhs.add_friend(_name);
+    return *this;
+}
+
+bool User::operator<(const User& rhs) const {
+  return _name < rhs._name;
 }

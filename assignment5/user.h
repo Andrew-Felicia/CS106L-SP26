@@ -25,11 +25,16 @@ public:
   User& operator=(const User& user);
 
   // //Prevent the User class from being move constructed.
-  // User(User&& user);
+  User(User&& user) = delete;
 
   // //Prevent the User class from being move assigned.
-  // User& operator=(User&& user);
+  User& operator=(User&& user) = delete;
 
+  //operator overload.
+  User& operator+=(User& rhs);
+
+  bool operator<(const User& rhs) const;
+  
 private:
   std::string _name;
   std::string* _friends;
