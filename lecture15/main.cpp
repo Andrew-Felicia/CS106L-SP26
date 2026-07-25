@@ -51,7 +51,10 @@ public:
 
     template <typename U>
     T value_or(U&& fallback) const {
-        // TODO: implement
+        if (_hasValue) {
+            return _value;
+        } 
+        return fallback;
     }
 
     // ============================================================
@@ -67,7 +70,10 @@ public:
 
     template <typename F>
     auto transform(F&& f) const {
-        // TODO: implement
+        if (_hasValue) {
+            return MyOptional<decltype(f(_value))>(f(_value));
+        }
+        return MyOptional<decltype(f(_value))>();
     }
 };
 
@@ -80,13 +86,15 @@ int main() {
     std::cout << "a has value: " << a.hasValue() << "\n";
     std::cout << "b has value: " << b.hasValue() << "\n";
 
-    // TODO: test value_or
-    // std::cout << a.value_or(0) << "\n";
-    // std::cout << b.value_or(0) << "\n";
+    //TODO: test value_or
+    std::cout << a.value_or(0) << "\n";
+    std::cout << b.value_or(0) << "\n";
 
-    // TODO: test transform
-    // auto c = a.transform([](int x) { return x * 2; })
-    //           .transform([](int x) { return x + 3; });
+    //TODO: test transform
+    auto c = a.transform([](int x) { return x * 2; })
+              .transform([](int x) { return x + 3; });
+    std::cout << c.hasValue() << '\n';
+    std::cout << c.value_or(-1) << '\n';
 
     return 0;
 }
