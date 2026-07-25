@@ -34,11 +34,19 @@ public:
     }
 
     Pirate(Pirate&& other) noexcept {
-        // TODO
+        loot = other.loot;
+        other.loot = new Treasure("Empty chest", 0);
     }
 
     Pirate& operator=(Pirate&& other) noexcept {
-        // TODO
+        if (this == &other) {
+            return *this;
+        }
+
+        delete loot;
+        loot = other.loot;
+        other.loot = new Treasure("Empty chest", 0);
+
         return *this;
     }
 
@@ -63,6 +71,9 @@ int main() {
 
     std::cout << "B now has: ";
     b.print();
+
+    std::cout << "A now has: ";
+    a.print();
 
     std::cout << "A is now in a valid empty state\n";
 
