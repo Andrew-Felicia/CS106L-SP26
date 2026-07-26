@@ -1,4 +1,4 @@
-#include "IntVector.h"
+#include "../include/IntVector.h"
 #include <stdexcept>
 
 IntVector::IntVector()
